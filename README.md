@@ -2,7 +2,7 @@
 ----------------------------------
 Currently uses key strokes to change between drawing modes and perform simple operations on the drawing.
 
--W - Save
+<li>W - Save
 -E - Load
 -R - Rectangle Draw
 -O - Oval Draw
