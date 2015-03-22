@@ -1,0 +1,6 @@
+Rectangle
+Rectangle Test 2
+3 Rectangles Test
+4 Rectangles
+All Shapes
+Freehand Test
