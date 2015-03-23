@@ -95,7 +95,7 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
     @Override
     public void mouseMoved(MouseEvent e) {
         
-        if (mode == 'p' && p != null) {
+        if (mode == 'p' && p != null && d != null) {
             PolygonDrawing tmp = (PolygonDrawing) d;
             tmp.modifyLastLine(e.getX(), e.getY());
         }
@@ -113,7 +113,7 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
                 p = new Point(e.getX(), e.getY());
                 PolygonDrawing tmp = (PolygonDrawing) d;
 
-                if (tmp.endingPoint.contains(p) && tmp.lines.size() > 2) {
+                if (tmp.endingPoint.contains(e.getPoint()) && tmp.lines.size() > 2) {
                     tmp.modifyLastLine(tmp.x1, tmp.y1);
                     try {
                         undo.push(this.duplicateScreen());
