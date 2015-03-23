@@ -8,6 +8,7 @@ Currently uses key strokes to change between drawing modes and perform simple op
 * O - Oval Draw
 * S - Square Draw
 * L - Line Draw
+* P - Polygon Draw (Click [not press] to add new vertice to polygon)
 * Z - Undo
 * X - Redo
 * Q - Select
