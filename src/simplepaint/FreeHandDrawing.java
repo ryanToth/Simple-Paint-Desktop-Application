@@ -53,6 +53,7 @@ public class FreeHandDrawing extends Drawing {
         return false;
     }
     
+    @Override
     public FreeHandDrawing duplicate() throws CloneNotSupportedException {
         
         Drawing duplicate = (Drawing) this.clone();

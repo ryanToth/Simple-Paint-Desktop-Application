@@ -4,3 +4,5 @@ Rectangle Test 2
 4 Rectangles
 All Shapes
 Freehand Test
+Jews
+RAWR

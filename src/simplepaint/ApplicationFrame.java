@@ -97,25 +97,36 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
         
         if (mode == 'p' && p != null) {
             PolygonDrawing tmp = (PolygonDrawing) d;
-
             tmp.modifyLastLine(e.getX(), e.getY());
         }
-        
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
         if (mode == 'p') {
             
-            p = new Point(e.getX(), e.getY());
-            PolygonDrawing tmp = (PolygonDrawing) d;
-            
-            if (tmp.endingPoint.contains(p) && tmp.lines.size() > 1) {
-                tmp.modifyLastLine(tmp.x1, tmp.y1);
-                drawings.add(d);
-                p = null;
-                d = null;
+            if (d == null) {
+                d = new PolygonDrawing(e.getX(),e.getY(), e.getX(), e.getY(), color);
+            }
+            else {
+                p = new Point(e.getX(), e.getY());
+                PolygonDrawing tmp = (PolygonDrawing) d;
+
+                if (tmp.endingPoint.contains(p) && tmp.lines.size() > 2) {
+                    tmp.modifyLastLine(tmp.x1, tmp.y1);
+                    try {
+                        undo.push(this.duplicateScreen());
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(ApplicationFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    drawings.add(d);
+                    p = null;
+                    d = null;
+                }
+                else {
+                    tmp.addNewLine(e.getX(),e.getY(), e.getX(), e.getY());
+                }
             }
         }
         
@@ -158,11 +169,12 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
     public void mouseReleased(MouseEvent e) {
         
         try {
-            undo.push(this.duplicateScreen());
+            if (mode != 'p')
+                undo.push(this.duplicateScreen());
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(ApplicationFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (mode != 'q') {
+        if (mode != 'q' && mode != 'p') {
             drawings.add(d);
             p = null;
             d = null;
@@ -225,6 +237,8 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(ApplicationFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        else if (e.getKeyCode() == e.VK_P)
+            mode = 'p';
         else if (e.getKeyCode() == e.VK_L)
             mode = 'l';
         else if (e.getKeyCode() == e.VK_R)
@@ -452,6 +466,22 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
                 
                 switch(drawing[0].charAt(0)) {
                     
+                    case 'p':
+                        coordinates = drawing[1].split(",");
+                        d = new PolygonDrawing(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), 
+                                Integer.parseInt(coordinates[2]), Integer.parseInt(coordinates[3]), 
+                                new Color(Integer.parseInt(coordinates[4].split("=")[1]),Integer.parseInt(coordinates[5].split("=")[1]),Integer.parseInt(coordinates[6].split("=")[1])));
+                        
+                        PolygonDrawing p = (PolygonDrawing) d;
+                        
+                        for (int i = 2; i < drawing.length; i++) {
+                            coordinates = drawing[i].split(",");
+                            p.addNewLine(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), 
+                                Integer.parseInt(coordinates[2]), Integer.parseInt(coordinates[3]));
+                        }
+                        drawings.add(d);
+                        d = null;
+                        break;
                     case 'f':
                         coordinates = drawing[1].split(",");
                         d = new FreeHandDrawing(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), 
