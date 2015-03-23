@@ -379,8 +379,10 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
         
         LinkedList<Drawing> tmp = new LinkedList<>();
         
-        for (int i = 0; i < drawings.size(); i++)
-            tmp.add(drawings.get(i).createCopy());
+        for (int i = 0; i < drawings.size(); i++) {
+            if (drawings.get(i) != null)
+                tmp.add(drawings.get(i).createCopy());
+        }
         
         return tmp;
     }
