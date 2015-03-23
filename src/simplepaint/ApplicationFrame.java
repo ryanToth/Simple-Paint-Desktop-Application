@@ -33,7 +33,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  *
@@ -86,6 +85,8 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
                     selected.get(i).move(e.getX() - p.x, e.getY() - p.y);
                 p = new Point(e.getX(), e.getY());
                 break;
+            case 'p':
+                break;
                 
             default: System.out.println("Error: no mode selected");
         }
@@ -94,10 +95,29 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
     @Override
     public void mouseMoved(MouseEvent e) {
         
+        if (mode == 'p' && p != null) {
+            PolygonDrawing tmp = (PolygonDrawing) d;
+
+            tmp.modifyLastLine(e.getX(), e.getY());
+        }
+        
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        
+        if (mode == 'p') {
+            
+            p = new Point(e.getX(), e.getY());
+            PolygonDrawing tmp = (PolygonDrawing) d;
+            
+            if (tmp.endingPoint.contains(p) && tmp.lines.size() > 1) {
+                tmp.modifyLastLine(tmp.x1, tmp.y1);
+                drawings.add(d);
+                p = null;
+                d = null;
+            }
+        }
         
     }
 
