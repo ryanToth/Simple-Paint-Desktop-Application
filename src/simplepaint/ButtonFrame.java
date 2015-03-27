@@ -199,16 +199,23 @@ public class ButtonFrame extends javax.swing.JFrame {
         });
         jComboBox1.addKeyListener(p);
         
-        buttonPanel.add(this.circleButton);
-        buttonPanel.add(this.ellipseButton);
-        buttonPanel.add(this.freehandButton);
+        buttonPanel.add(this.selectButton);
+        
         buttonPanel.add(this.lineButton);
-        buttonPanel.add(this.polyButton);
+        
         buttonPanel.add(this.rectangleButton);
         buttonPanel.add(this.squareButton);
-        buttonPanel.add(this.selectButton);
+        
+        buttonPanel.add(this.ellipseButton);
+        buttonPanel.add(this.circleButton);
+        
+        buttonPanel.add(this.freehandButton);
+        
+        buttonPanel.add(this.polyButton);
+
         buttonPanel.add(this.undoButton);
         buttonPanel.add(this.redoButton);
+        
         buttonPanel.add(this.jComboBox1);
         
         jToolBar1.setFloatable(false);
