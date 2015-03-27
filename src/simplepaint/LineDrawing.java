@@ -32,7 +32,7 @@ public class LineDrawing extends Drawing {
     
     @Override
     public boolean intersects(int x, int y) {
-        return shape.intersects(x, y-25, 10, 10);
+        return shape.intersects(x, y, 10, 10);
     }
     
     @Override

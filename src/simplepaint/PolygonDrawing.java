@@ -23,7 +23,7 @@ public class PolygonDrawing extends Drawing {
     public PolygonDrawing(int x, int y, int width, int height, Color color) {
         super(x, y, width, height, color);
         lines.add(new LineDrawing(x, y, width, height, color));
-        endingPoint = new Rectangle(x-3, y-3, x+3, y-3);
+        endingPoint = new Rectangle(x-3, y-3, 6, 6);
     }
     
     public void modifyLastLine(int x2, int y2) {

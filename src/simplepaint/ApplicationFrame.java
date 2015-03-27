@@ -33,6 +33,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 /**
  *
@@ -40,6 +42,7 @@ import javax.swing.JPanel;
  */
 public class ApplicationFrame extends JPanel implements MouseMotionListener, MouseListener, ActionListener, KeyListener {
     
+    Timer t = new Timer(100,null);
     private Point p = null;
     private Drawing d = null;
     private LinkedList<Drawing> drawings = new LinkedList<>();
@@ -48,15 +51,17 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
     private LinkedList<Drawing> selected = new LinkedList<>();
     private LinkedList<Drawing> clipboard = new LinkedList<>();
     boolean control = false;
-    private char mode = 'l';
+    char mode = 'l';
     private Color color = Color.black;
     
     public ApplicationFrame() {
-
+        t.start();
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        
+        e = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
         
         switch(mode) {
          
@@ -95,6 +100,8 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
     @Override
     public void mouseMoved(MouseEvent e) {
         
+        e = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
+        
         if (mode == 'p' && p != null && d != null) {
             PolygonDrawing tmp = (PolygonDrawing) d;
             tmp.modifyLastLine(e.getX(), e.getY());
@@ -104,8 +111,9 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
     @Override
     public void mouseClicked(MouseEvent e) {
 
+        e = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
+        
         if (mode == 'p') {
-            
             if (d == null) {
                 d = new PolygonDrawing(e.getX(),e.getY(), e.getX(), e.getY(), color);
             }
@@ -135,6 +143,8 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
     @Override
     public void mousePressed(MouseEvent e) {
        
+        e = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
+        
         p = new Point(e.getX(), e.getY());
         
         switch(mode) {
@@ -158,7 +168,6 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
                     }
                 }
                 if (!found) clearSelected();
-                    
                 break;
         }
         
@@ -167,6 +176,8 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        
+        e = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
         
         try {
             if (mode != 'p')
@@ -198,7 +209,7 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
     
     @Override
     public void paint(Graphics g) {
-
+        
         repaint();
         
         Graphics2D g2 = (Graphics2D) g;
@@ -544,6 +555,9 @@ public class ApplicationFrame extends JPanel implements MouseMotionListener, Mou
                 }
             }
         }
-        
+    }
+    
+    public void setColor(Color c) {
+        color = c;
     }
 }
