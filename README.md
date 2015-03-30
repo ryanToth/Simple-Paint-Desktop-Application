@@ -1,6 +1,6 @@
 # Simple-Paint-Desktop-Application
 ----------------------------------
-Currently uses key strokes to change between drawing modes and perform simple operations on the drawing.
+The keyboard shortcuts for changing between drawing modes are as follows:
 
 * W - Save
 * E - Load
